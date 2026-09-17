@@ -1,0 +1,366 @@
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Car Parking Dashboard</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e293b;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 3px 10px #ddd;
+        }
+
+        .number {
+            font-size: 30px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .logout {
+            background: #dc2626;
+        }
+
+        .slot-map {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .slot {
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .available-slot {
+            background: #dcfce7;
+            border: 3px solid #16a34a;
+        }
+
+        .occupied-slot {
+            background: #fee2e2;
+            border: 3px solid #dc2626;
+        }
+
+        .table-box {
+            background: white;
+            padding: 20px;
+            margin-top: 25px;
+            border-radius: 12px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #2563eb;
+            color: white;
+        }
+
+        @media (max-width: 700px) {
+
+            body {
+                padding: 10px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .buttons {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🚗 Car Parking Management</h1>
+
+
+    <!-- DASHBOARD CARDS -->
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>Total Slots</h3>
+
+            <div class="number">
+                {{ total_slots }}
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Occupied</h3>
+
+            <div class="number">
+                {{ occupied }}
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Available</h3>
+
+            <div class="number">
+                {{ available }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BUTTONS -->
+
+    <div class="buttons">
+
+        <a href="/parking">
+            <button>🚗 Park Vehicle</button>
+        </a>
+
+        <a href="/remove">
+            <button>🚪 Remove Vehicle</button>
+        </a>
+
+        <a href="/search">
+            <button>🔍 Search Vehicle</button>
+        </a>
+
+        <a href="/history">
+            <button>📜 History</button>
+        </a>
+
+        <a href="/collection">
+            <button>💰 Collection</button>
+        </a>
+
+        <a href="/logout">
+            <button class="logout">🔐 Logout</button>
+        </a>
+
+    </div>
+
+
+    <!-- PARKING SLOT MAP -->
+
+    <div class="table-box">
+
+        <h2>🅿️ Parking Slot Map</h2>
+
+        <div class="slot-map">
+
+            {% for slot in slots %}
+
+                {% set parked_vehicle = namespace(vehicle=None) %}
+
+                {% for vehicle in vehicles %}
+
+                    {% if vehicle.slot == slot %}
+
+                        {% set parked_vehicle.vehicle = vehicle %}
+
+                    {% endif %}
+
+                {% endfor %}
+
+
+                {% if parked_vehicle.vehicle %}
+
+                    <div class="slot occupied-slot">
+
+                        <h2>🔴 {{ slot }}</h2>
+
+                        <p>
+                            <b>{{ parked_vehicle.vehicle.vehicle }}</b>
+                        </p>
+
+                        <small>
+                            Occupied
+                        </small>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="slot available-slot">
+
+                        <h2>🟢 {{ slot }}</h2>
+
+                        <p>
+                            Available
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- CURRENTLY PARKED VEHICLES -->
+
+    <div class="table-box">
+
+        <h2>🚘 Currently Parked Vehicles</h2>
+
+        {% if vehicles %}
+
+        <table>
+
+            <tr>
+
+                <th>Vehicle</th>
+                <th>Owner</th>
+                <th>Type</th>
+                <th>Slot</th>
+                <th>Entry Time</th>
+
+            </tr>
+
+
+            {% for vehicle in vehicles %}
+
+            <tr>
+
+                <td>
+                    {{ vehicle.vehicle }}
+                </td>
+
+                <td>
+                    {{ vehicle.owner }}
+                </td>
+
+                <td>
+                    {{ vehicle.type }}
+                </td>
+
+                <td>
+                    🅿️ {{ vehicle.slot }}
+                </td>
+
+                <td>
+                    {{ vehicle.entry_time[8:10] }}-{{ vehicle.entry_time[5:7] }}-{{ vehicle.entry_time[0:4] }} {{ vehicle.entry_time[11:16] }}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        {% else %}
+
+        <p>
+            No vehicles are currently parked.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- COLLECTION -->
+
+    <div class="card" style="margin-top:25px;">
+
+        <h2>💰 Total Collection</h2>
+
+        <div class="number">
+            ₹{{ total_collection }}
+        </div>
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>
+```

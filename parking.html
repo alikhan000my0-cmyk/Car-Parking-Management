@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Park Vehicle</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial;
+            background: #f1f5f9;
+            padding: 20px;
+        }
+
+        .box {
+            max-width: 500px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px #ccc;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2563eb;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 7px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 16px;
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .rates {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+    <h1>🚗 Park Vehicle</h1>
+
+    <form method="POST">
+
+        <label>Vehicle Number</label>
+
+        <input
+            type="text"
+            name="vehicle"
+            placeholder="Example: UP32AB1234"
+            required
+        >
+
+
+        <label>Owner Name</label>
+
+        <input
+            type="text"
+            name="owner"
+            placeholder="Enter owner name"
+            required
+        >
+
+
+        <label>Mobile Number</label>
+
+        <input
+            type="tel"
+            name="mobile"
+            placeholder="Enter mobile number"
+            required
+        >
+
+
+        <label>Vehicle Type</label>
+
+        <select name="type" required>
+
+            <option value="">Select Vehicle Type</option>
+
+            <option value="Bike">
+                🏍️ Bike - ₹10/hour
+            </option>
+
+            <option value="Car">
+                🚗 Car - ₹20/hour
+            </option>
+
+            <option value="SUV">
+                🚙 SUV - ₹30/hour
+            </option>
+
+        </select>
+
+
+        <label>Parking Slot</label>
+
+        <select name="slot" required>
+
+            <option value="">
+                Select Parking Slot
+            </option>
+
+            {% for slot in available_slots %}
+
+            <option value="{{ slot }}">
+                🅿️ {{ slot }}
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+
+        <div class="rates">
+
+            <b>💰 Parking Rates</b>
+
+            <p>🏍️ Bike: ₹10/hour</p>
+
+            <p>🚗 Car: ₹20/hour</p>
+
+            <p>🚙 SUV: ₹30/hour</p>
+
+        </div>
+
+
+        <button type="submit">
+            🅿️ Park Vehicle
+        </button>
+
+    </form>
+
+
+    <a href="/dashboard">
+        ⬅ Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+
+</html>

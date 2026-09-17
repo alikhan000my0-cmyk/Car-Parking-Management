@@ -1,0 +1,139 @@
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Search Vehicle</title>
+
+    <style>
+
+        body {
+            font-family: Arial;
+            background: #f1f5f9;
+        }
+
+        .box {
+            max-width: 500px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px #ccc;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 25px;
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+    <h1>🔍 Search Vehicle</h1>
+
+    <form method="POST">
+
+        <input
+            type="text"
+            name="vehicle"
+            placeholder="Enter Vehicle Number"
+            required
+        >
+
+        <button type="submit">
+            Search
+        </button>
+
+    </form>
+
+
+    {% if vehicle %}
+
+    <div class="result">
+
+        <h2>✅ Vehicle Found</h2>
+
+        <p>
+            <b>Vehicle:</b>
+            {{ vehicle.vehicle }}
+        </p>
+
+        <p>
+            <b>Owner:</b>
+            {{ vehicle.owner }}
+        </p>
+
+        <p>
+            <b>Mobile:</b>
+            {{ vehicle.mobile }}
+        </p>
+
+        <p>
+            <b>Type:</b>
+            {{ vehicle.type }}
+        </p>
+
+        <p>
+            <b>Parking Slot:</b>
+            {{ vehicle.slot }}
+        </p>
+
+        <p>
+            <b>Entry Time:</b>
+            {{ vehicle.entry_time[8:10] }}-{{ vehicle.entry_time[5:7] }}-{{ vehicle.entry_time[0:4] }} {{ vehicle.entry_time[11:16] }}
+        </p>
+
+    </div>
+
+    {% elif request.method == "POST" %}
+
+    <div class="result">
+        ❌ Vehicle not found!
+    </div>
+
+    {% endif %}
+
+
+    <a href="/dashboard">
+        ⬅ Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+
+</html>
+```

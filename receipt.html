@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Parking Receipt</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+
+        body {
+            font-family: Arial;
+            background: #f1f5f9;
+            padding: 20px;
+        }
+
+        .receipt {
+            max-width: 500px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px #ccc;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2563eb;
+        }
+
+        .line {
+            padding: 12px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .total {
+            text-align: center;
+            font-size: 32px;
+            color: #16a34a;
+            margin-top: 25px;
+            font-weight: bold;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 7px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="receipt">
+
+    <h1>🧾 Parking Receipt</h1>
+
+    <div class="line">
+        <b>Vehicle:</b>
+        {{ vehicle.vehicle }}
+    </div>
+
+    <div class="line">
+        <b>Owner:</b>
+        {{ vehicle.owner }}
+    </div>
+
+    <div class="line">
+        <b>Vehicle Type:</b>
+        {{ vehicle.type }}
+    </div>
+
+    <div class="line">
+        <b>Parking Slot:</b>
+        {{ vehicle.slot }}
+    </div>
+
+    <div class="line">
+        <b>Entry Time:</b>
+        {{ entry_time.strftime("%d-%m-%Y %H:%M") }}
+    </div>
+
+    <div class="line">
+        <b>Exit Time:</b>
+        {{ exit_time.strftime("%d-%m-%Y %H:%M") }}
+    </div>
+
+    <div class="line">
+        <b>Parking Hours:</b>
+        {{ hours }}
+    </div>
+
+    <div class="line">
+        <b>Rate:</b>
+        ₹{{ rate }}/hour
+    </div>
+
+    <div class="total">
+        Total: ₹{{ fee }}
+    </div>
+
+    <button onclick="window.print()">
+        🖨️ Print Receipt
+    </button>
+
+    <a href="/dashboard">
+        <button>
+            🏠 Dashboard
+        </button>
+    </a>
+
+</div>
+
+</body>
+
+</html>
