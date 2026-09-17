@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Remove Vehicle</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f1f5f9;
+        }
+
+        .box {
+            max-width: 450px;
+            margin: 80px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px #ccc;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 16px;
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+            color: #2563eb;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <h1>🚪 Remove Vehicle</h1>
+
+    <form method="POST">
+
+        <input
+            type="text"
+            name="vehicle"
+            placeholder="Enter Vehicle Number"
+            required
+        >
+
+        <button type="submit">
+            Remove Vehicle
+        </button>
+
+    </form>
+
+    {% if message %}
+        <h3>{{ message }}</h3>
+    {% endif %}
+
+    <a href="/dashboard">⬅ Back to Dashboard</a>
+
+
+</div>
+
+</body>
+
+</html>

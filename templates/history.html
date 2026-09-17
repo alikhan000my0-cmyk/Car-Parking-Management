@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Parking History</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+
+        body {
+            font-family: Arial;
+            background: #f1f5f9;
+            padding: 20px;
+        }
+
+        .box {
+            max-width: 1000px;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        .table-box {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        th {
+            background: #2563eb;
+            color: white;
+        }
+
+        .fee {
+            color: #16a34a;
+            font-weight: bold;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+    <h1>📜 Parking History</h1>
+
+    {% if history %}
+
+    <div class="table-box">
+
+        <table>
+
+            <tr>
+
+                <th>Vehicle</th>
+                <th>Owner</th>
+                <th>Type</th>
+                <th>Slot</th>
+                <th>Entry</th>
+                <th>Exit</th>
+                <th>Hours</th>
+                <th>Rate</th>
+                <th>Fee</th>
+
+            </tr>
+
+
+            {% for item in history %}
+
+            <tr>
+
+                <td>
+                    {{ item.vehicle }}
+                </td>
+
+                <td>
+                    {{ item.owner }}
+                </td>
+
+                <td>
+                    {{ item.type }}
+                </td>
+
+                <td>
+                    {{ item.slot }}
+                </td>
+
+                <td>
+                    {{ item.entry_time }}
+                </td>
+
+                <td>
+                    {{ item.exit_time }}
+                </td>
+
+                <td>
+                    {{ item.hours }}
+                </td>
+
+                <td>
+                    ₹{{ item.rate }}
+                </td>
+
+                <td class="fee">
+                    ₹{{ item.fee }}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+    <h3>No parking history yet.</h3>
+
+    {% endif %}
+
+
+    <a href="/dashboard">
+
+        <button>
+            ⬅ Back to Dashboard
+        </button>
+
+    </a>
+
+</div>
+
+</body>
+
+</html>
